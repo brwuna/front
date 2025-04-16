@@ -1,0 +1,51 @@
+<div class="wrapper">
+  <header class="header">
+    <img src="../assets/logo.svg" alt="">
+  </header>
+
+    <main class="todo-container">
+        <input placeholder="New task" [(ngModel)]="newTask" />
+        <button mat-icon-button class="add-btn" (click)="addTask()">
+            <mat-icon class="icon-add">add</mat-icon>
+        </button>
+    </main>
+    <section>
+      <ul class="todo-list">
+        <li class="todo-item" *ngFor="let task of tasks">
+          <input type="checkbox" [checked]="task.is_completed" (change)="toggleComplete(task)"/>
+          <div class="text-container">
+            <span [class.completed]="task.is_completed">{{ task.description }}</span>
+          </div>
+
+
+          <div class="button-container">
+            <button mat-mini-fab aria-label="Edit task" class="edit-btn" type="button" data-target="#exampleModal" (click)="selectedTask = task">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-mini-fab class="delete-fab" (click)="task.task_id ? deleteTask(task.task_id) : null">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </li>
+      </ul>
+    </section>
+      <!-- Modal -->
+      <div class="modal fade" [ngClass]="{'show': selectedTask}" [style.display]="selectedTask ? 'block' : 'none'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Task</h5>
+              <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input placeholder="Update task" [(ngModel)]="editTaskValue" />
+              <button mat-icon-button class="add-btn" (click)="updateTask()">
+                <mat-icon class="icon-add">+</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
